@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.11.1/ethers.umd.min.js"
+    integrity="sha512-qp190c9mQz0dBG4WDw9gh96lS4VPmgewqOn5h/i04TaANIODXxFagRTaga4nS6VkbWFraPan1BGwZh6FS48uHg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/scripts/metamask.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-link title is-4" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="/certificate.svg" />
+        <span class="ml-2">
+          <%= title %>
+        </span>
+      </a>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Issue New Certificate</h3>
+
+      <div class="field">
+        <label class="label is-size-4">Certificate ID</label>
+        <div class="control">
+          <input class="input is-size-5" id="certificateID" name="certificateID" type="number" placeholder="000"
+            required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label is-size-4">Name</label>
+        <div class="control">
+          <input class="input is-size-5" id="candidateName" name="candidateName" type="text" placeholder="John Doe"
+            required />
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <label class="label is-size-4">Course</label>
+          <div class="select is-size-5 is-fullwidth">
+            <select id="courseName" name="courseName" required>
+              <option hidden value="">Select Course</option>
+              <option value="Certified Blockchain Associate">
+                Certified Blockchain Associate
+              </option>
+              <option value="Certified Ethereum Developer">
+                Certified Ethereum Developer
+              </option>
+              <option value="Certified Hyperledger Fabric Developer">
+                Certified Hyperledger Fabric Developer
+              </option>
+              <option value="Certified Blockchain Architect">
+                Certified Blockchain Architect
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="column">
+          <label class="label is-size-4">Grade</label>
+          <div class="select is-size-5 is-fullwidth">
+            <select id="grade" name="grade" required>
+              <option hidden value="">Select Grade</option>
+              <option value="S">S</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="column">
+          <label class="label is-size-4">Date</label>
+          <input class="input is-size-5" id="date" name="date" type="date" required />
+        </div>
+      </div>
+
+      <div class="field is-grouped mt-6">
+        <div class="control">
+          <button class="button is-link is-size-5" onclick="issueCertificate()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

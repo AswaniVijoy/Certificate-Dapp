@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+</head>
+
+<body>
+  <nav class="navbar is-link title is-4" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="/certificate.svg" />
+        <span class="ml-2">
+          <%= title %>
+        </span>
+      </a>
+    </div>
+    <div class="navbar-end navbar-item">
+      <a class="button is-light" href="/">← Back to Home</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="level mb-5">
+        <div class="level-left">
+          <div>
+            <h3 class="title is-3">📡 Certificate Issued Events</h3>
+            <p class="subtitle is-6 has-text-grey">
+              All <code>Issued</code> events emitted by the contract on Hoodi (last 1000 blocks)
+            </p>
+          </div>
+        </div>
+        <div class="level-right">
+          <button class="button is-link" onclick="location.reload()">
+            🔄 Refresh
+          </button>
+        </div>
+      </div>
+
+      <% if (events.length === 0) { %>
+        <div class="notification is-warning is-light">
+          <strong>No events found</strong> in the last 1000 blocks. Issue a certificate to see events here.
+        </div>
+      <% } else { %>
+
+        <div class="notification is-success is-light mb-4">
+          <strong><%= events.length %></strong> event(s) found on-chain.
+        </div>
+        <form method="GET" action="/events" class="box mb-5">
+  <div class="columns is-multiline">
+
+    <!-- ID -->
+    <div class="column is-3">
+      <label class="label">Certificate ID</label>
+      <input 
+        class="input" 
+        type="text" 
+        name="id" 
+        placeholder="Enter ID"
+        value="<%= query?.id || '' %>"
+      >
+    </div>
+
+    <!-- COURSE DROPDOWN -->
+    <div class="column is-3">
+      <label class="label">Course</label>
+      <div class="select is-fullwidth">
+        <select name="course">
+          <option value="">All Courses</option>
+          <option value="Certified Ethereum Developer" <%= query?.course === "Certified Ethereum Developer" ? "selected" : "" %>>
+            Certified Ethereum Developer
+          </option>
+          <option value="BSc" <%= query?.course === "BSc" ? "selected" : "" %>>
+            BSc
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- GRADE DROPDOWN -->
+    <div class="column is-3">
+      <label class="label">Grade</label>
+      <div class="select is-fullwidth">
+        <select name="grade">
+          <option value="">All Grades</option>
+          <option value="A" <%= query?.grade === "A" ? "selected" : "" %>>A</option>
+          <option value="B" <%= query?.grade === "B" ? "selected" : "" %>>B</option>
+          <option value="C" <%= query?.grade === "C" ? "selected" : "" %>>C</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="column is-3 is-flex is-align-items-end">
+      <button class="button is-link is-fullwidth">🔍 Filter</button>
+    </div>
+
+  </div>
+
+  <!-- CLEAR -->
+  <div class="mt-3">
+    <a href="/events" class="button is-light">❌ Clear Filters</a>
+  </div>
+</form>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr class="has-background-link-light">
+                <th class="is-size-5">#</th>
+                <th class="is-size-5">Certificate ID</th>
+                <th class="is-size-5">Course</th>
+                
+                <th class="is-size-5">Grade</th>
+                <th class="is-size-5">Block</th>
+                <th class="is-size-5">Transaction Hash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% events.forEach((e, index) => { %>
+                <tr>
+                  <td class="is-size-5"><%= index + 1 %></td>
+                  <td class="is-size-5">
+                    <span class="tag is-link is-medium">#<%= e.id %></span>
+                  </td>
+                  <td class="is-size-5">
+                    <span class="tag is-success is-medium"><%= e.course %></span>
+                  </td> 
+                  <td class="is-size-5">
+                    <span class="tag is-success is-medium"><%= e.grade %></span>
+                  </td>
+                  
+                  <td class="is-size-5"><%= e.block %></td>
+                  <td>
+                    <span class="is-family-monospace is-size-7 has-text-grey">
+                      <%= e.txHash %>
+                    </span>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+      <% } %>
+    </div>
+  </section>
+</body>
+
+</html>
